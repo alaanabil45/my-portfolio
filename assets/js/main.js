@@ -249,3 +249,35 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".number-counter");
+
+  counters.forEach(counter => {
+    const target = +counter.getAttribute("data-number");
+    let count = 0;
+    const duration = 2000; // وقت الانيميشن كله (2 ثانية)
+    const step = target / (duration / 20); // كل 20ms يزود قد إيه
+
+    const updateCounter = () => {
+      count += step;
+      if (count < target) {
+        counter.innerText = Math.ceil(count);
+        setTimeout(updateCounter, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    // تشغيل الانيميشن لما يظهر في الشاشة
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        updateCounter();
+        observer.disconnect(); // مرة واحدة بس
+      }
+    }, { threshold: 0.5 });
+
+    observer.observe(counter);
+  });
+});
