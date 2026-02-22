@@ -1,538 +1,1198 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - DevFolio Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>Alaa Nabil — Frontend Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    :root {
+      --cream: #f5f1eb;
+      --warm-white: #faf8f5;
+      --charcoal: #1a1a1a;
+      --dark: #111111;
+      --accent: #c8a97e;
+      --accent-deep: #a8865a;
+      --muted: #7a7570;
+      --border: rgba(26,26,26,0.1);
+      --surface: #ffffff;
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    html { scroll-behavior: smooth; }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    body {
+      font-family: var(--font-body);
+      background: var(--warm-white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
-  <!-- =======================================================
-  * Template Name: DevFolio
-  * Template URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    /* ─── CURSOR ─── */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      opacity: 0.6;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.4;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.5s ease;
+    }
+    header.scrolled {
+      background: rgba(245,241,235,0.92);
+      backdrop-filter: blur(20px);
+      padding: 18px 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    nav { display: flex; gap: 40px; align-items: center; }
+    nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    nav a:hover { color: var(--charcoal); }
+    nav a:hover::after { width: 100%; }
+
+    /* mobile nav */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--charcoal);
+      transition: all 0.3s;
+    }
+    @media(max-width:768px) {
+      header { padding: 24px 28px; }
+      header.scrolled { padding: 16px 28px; }
+      nav { display: none; position: fixed; inset: 0; background: var(--cream); flex-direction: column; justify-content: center; align-items: center; gap: 48px; z-index: 99; }
+      nav.open { display: flex; }
+      nav a { font-size: 18px; }
+      .menu-toggle { display: flex; z-index: 100; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 60px 80px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s ease forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--accent);
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 6vw, 88px);
+      line-height: 1.0;
+      color: var(--charcoal);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 380px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s ease forwards;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s ease forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--charcoal);
+      color: var(--warm-white);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--charcoal);
+      padding-bottom: 2px;
+      transition: all 0.3s;
+    }
+    .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.05);
+      transform: scale(1.05);
+      animation: zoomOut 1.5s 0.2s ease forwards;
+    }
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(245,241,235,0.3) 0%, transparent 60%);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 3;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s ease forwards;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: drawLine 1.5s 1.5s ease forwards;
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomOut {
+      from { transform: scale(1.05); }
+      to { transform: scale(1); }
+    }
+    @keyframes drawLine {
+      to { transform: scaleY(1); }
+    }
+
+    @media(max-width:900px) {
+      #hero { grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: auto; }
+      .hero-right { height: 50vh; order: -1; }
+      .hero-left { padding: 60px 28px 60px; }
+      .hero-scroll { left: 28px; }
+    }
+
+    /* ─── SECTIONS SHARED ─── */
+    section { padding: 120px 60px; }
+    @media(max-width:768px) { section { padding: 80px 28px; } }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 48px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--accent);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-heading {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 60px);
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 32px;
+    }
+    .about-heading em { font-style: italic; color: var(--accent); }
+    .about-text {
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .about-details { margin-top: 40px; }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .detail-row strong { color: var(--charcoal); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; font-size: 11px; }
+    .detail-row span { color: var(--muted); }
+
+    /* skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .skill-item {}
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--charcoal);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .skill-pct { color: var(--accent); }
+    .skill-bar-bg {
+      height: 2px;
+      background: rgba(26,26,26,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 1px;
+    }
+
+    @media(max-width:900px) {
+      #about { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* ─── RESUME ─── */
+    #resume { background: var(--warm-white); }
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .resume-col-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--charcoal);
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 40px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 3.5px; top: 22px;
+      width: 1px;
+      height: calc(100% + 10px);
+      background: var(--border);
+    }
+    .timeline-item:last-child::after { display: none; }
+    .timeline-date {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .timeline-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+    .timeline-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .timeline-body {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .timeline-body li {
+      list-style: none;
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .timeline-body li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    @media(max-width:900px) {
+      .resume-grid { grid-template-columns: 1fr; gap: 60px; }
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--charcoal); }
+    #services .section-label { color: var(--accent); }
+    #services .section-label::before { background: var(--accent); }
+    .services-heading {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 60px);
+      color: var(--warm-white);
+      margin-bottom: 80px;
+      max-width: 500px;
+      line-height: 1.15;
+    }
+    .services-heading em { font-style: italic; color: var(--accent); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .service-card {
+      background: var(--charcoal);
+      padding: 48px 40px;
+      transition: background 0.4s ease;
+      cursor: default;
+    }
+    .service-card:hover { background: rgba(200,169,126,0.08); }
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: rgba(200,169,126,0.2);
+      line-height: 1;
+      margin-bottom: 32px;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-num { color: rgba(200,169,126,0.5); }
+    .service-icon {
+      width: 48px; height: 48px;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+    .service-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--warm-white);
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.45);
+    }
+
+    @media(max-width:900px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── PORTFOLIO ─── */
+    #portfolio { background: var(--cream); }
+    .portfolio-heading {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 60px);
+      color: var(--charcoal);
+      margin-bottom: 16px;
+    }
+    .portfolio-intro {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 60px;
+      line-height: 1.8;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 24px;
+      border: 1px solid var(--border);
+      background: none;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.3s;
+      margin-right: -1px;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--charcoal);
+      color: var(--warm-white);
+      border-color: var(--charcoal);
+      z-index: 1;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .portfolio-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--charcoal);
+      cursor: pointer;
+    }
+    .portfolio-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s;
+      filter: grayscale(20%);
+    }
+    .portfolio-card:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0%);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+    }
+    .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-tag {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .portfolio-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--warm-white);
+      margin-bottom: 4px;
+    }
+    .portfolio-card-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .portfolio-links { display: flex; gap: 12px; }
+    .portfolio-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 2px;
+      transition: all 0.3s;
+    }
+    .portfolio-link:hover { color: var(--accent); border-color: var(--accent); }
+    .portfolio-card.hidden { display: none; }
+
+    @media(max-width:900px) { .portfolio-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:600px) { .portfolio-grid { grid-template-columns: 1fr; } }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--warm-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-heading {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 60px);
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+    }
+    .contact-heading em { font-style: italic; color: var(--accent); }
+    .contact-text { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 40px; }
+    .contact-info { display: flex; flex-direction: column; gap: 20px; }
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .contact-info-item svg {
+      width: 18px; height: 18px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .contact-info-item a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .contact-info-item a:hover { color: var(--accent); }
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:600px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+    }
+    .form-group input, .form-group textarea {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 14px 18px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--charcoal);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      border-radius: 2px;
+      resize: none;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,169,126,0.1);
+    }
+    .form-group textarea { min-height: 140px; }
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: var(--charcoal);
+      color: var(--warm-white);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 2px;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--accent); transform: translateY(-2px); }
+
+    @media(max-width:900px) {
+      #contact { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--warm-white);
+      text-decoration: none;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+    .footer-socials { display: flex; gap: 24px; }
+    .footer-socials a {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .footer-socials a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .footer-socials svg { width: 16px; height: 16px; }
+    @media(max-width:768px) {
+      footer { flex-direction: column; gap: 28px; padding: 40px 28px; text-align: center; }
+    }
+
+    /* ─── BACK TO TOP ─── */
+    #back-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px; height: 48px;
+      background: var(--charcoal);
+      color: var(--warm-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.4s;
+      z-index: 50;
+    }
+    #back-top.visible { opacity: 1; transform: translateY(0); }
+    #back-top:hover { background: var(--accent); }
+    #back-top svg { width: 20px; height: 20px; }
+  </style>
 </head>
+<body>
 
-<body class="index-page">
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Alaa</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-    </div>
+  <!-- Header -->
+  <header id="header">
+    <a href="#hero" class="logo">AN.</a>
+    <nav id="nav">
+      <a href="#about">About</a>
+      <a href="#resume">Resume</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="https://images.pexels.com/photos/952670/pexels-photo-952670.jpeg" alt="" data-aos="fade-in">
-
-      <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2>I am Alaa Nabil</h2>
-        <p><span class="typed" data-typed-items="Frontend, Web Developer"></span></p>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-          <div class="col-md-6">
-
-            <div class="row justify-content-between gy-4">
-              <div class="col-lg-5">
-                <img src="assets/img/Alaa-removebg-preview.png" class="img-fluid" alt="">
-              </div>
-              <div class="col-lg-7 about-info">
-                <p><strong>Name: </strong> <span>Alaa Nabil</span></p>
-                <p><strong>Profile: </strong> <span>Frontend Developer</span></p>
-                <p><strong>Email: </strong> <span>alaanab2005@gmail.com</span></p>
-                <p><strong>Phone: </strong> <span>+20 112 264 2619</span></p>
-              </div>
-            </div>
-
-            
-          </div>
-
-          <div class="col-md-6">
-            <div class="about-me">
-              <h4>About me</h4>
-              <p class="lead">
-                I am a Frontend Developer specializing in HTML, CSS, and JavaScript, with hands-on experience in React, Angular, and Bootstrap. 
-                I design and build responsive, high-performance web interfaces that combine clean, modern design with seamless functionality. 
-                My work emphasizes intuitive user experiences, cross-browser compatibility, and optimized, maintainable code. 
-                I am passionate about implementing best practices, writing efficient and reusable components, and leveraging the latest frontend technologies to deliver polished web applications.
-              </p>
-              
-            </div>
-          </div>
-
-          <div class="skills-content skills-animation">
-
-              
-
-              
-        <div >
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Skills</span></h2>
-          </div>
-
-
-          <div class="row justify-content-between">
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="100">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">HTML/CSS</span>
-              </div>
-            </div>
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="200">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="85">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">JavaScript</span>
-              </div>
-            </div>
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="70">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">React</span>
-              </div>
-            </div>
-
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="40">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">Angular</span>
-              </div>
-            </div>
-
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="55">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">Bootstrap</span>
-              </div>
-            </div>
-          
-        </div>
-      </div>
-              
-            </div>
-        </div>
-
-      </div>
-
-    </section><!-- /About Section -->
-
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-        <p>Passionate Web Developer creating clean, modern, and efficient digital experiences.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Alaa Nabil</h4>
-              <p><em>I am a passionate Frontend Developer with strong skills in HTML, CSS, and JavaScript, and experience with React, Angular, and Bootstrap. I enjoy creating clean, responsive, and user-friendly web interfaces, turning design ideas into seamless digital experiences. Always eager to learn new technologies, I thrive in collaborative environments and strive to deliver high-quality, efficient, and engaging web projects.</em></p>
-              <ul>
-                <li>Alexandria, Egypt</li>
-                <li>+20 112 264 2619</li>
-                <li>alaanab2005@gmail.com</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Faculty of Computer &amp; Data Science</h4>
-              <h5>2023 - 2027</h5>
-              <p><em>Alexandria, Egypt</em></p>
-              <p>
-                Pursuing a Bachelor's degree in Computer & Data Science, focusing on software development, web technologies, and data analysis. 
-                Gaining strong theoretical knowledge and practical skills in programming, databases, and modern frontend frameworks, while engaging in collaborative projects to build real-world applications.
-              </p>
-            </div> <!-- Edn Resume Item -->
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>React Frontend Developer</h4>
-              <h5>July 2025 - Present</h5>
-              <p><em>Depi Alexandria, Egypt </em></p>
-              <ul>
-                <li>Currently undergoing an intensive React Frontend Development training program, focusing on building dynamic and responsive web applications.</li>
-                <li>Gaining hands-on experience with React components, state management, hooks, and routing.</li>
-                <li>Learning to integrate APIs and implement modern frontend best practices for high-performance applications.</li>
-                <li>Enhancing skills in creating clean, maintainable, and scalable code for real-world projects.</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Resume Section -->
-
-    <!-- Services Section -->
-    <section id="services" class="services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Services</h2>
-        <p>Offering a range of professional frontend services, including responsive web design, modern web application development, and interactive UI solutions tailored to enhance user experience and performance.</p>
-
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4">
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Responsive Web Design</h3>
-              </a>
-              <p>Designing clean and responsive interfaces that adapt seamlessly to all devices, ensuring optimal user experience across desktops, tablets, and mobiles.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-broadcast"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>React Development</h3>
-              </a>
-              <p>Building dynamic single-page applications with React, leveraging components, state management, and hooks for interactive and scalable web solutions.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-bounding-box-circles"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>UI/UX Design</h3>
-              </a>
-              <p>Creating visually appealing and intuitive user interfaces that enhance usability, accessibility, and overall user satisfaction.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          
-
-        </div>
-      </div>
-    </section>
-    <!-- /Services Section -->
-
-   
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-        <p>A showcase of my projects and skills, highlighting creativity, innovation, and dedication.</p>
-
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">HTML & CSS Native</li>
-            <li data-filter=".filter-product">JavaScript</li>
-            <li data-filter=".filter-branding">React</li>
-            <li data-filter=".filter-bootstrap">Bootstrap</li>
-            <li data-filter=".filter-books">Angular</li>
-          </ul><!-- End Portfolio Filters -->
-
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="assets/img/portfolio/restrant.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>CAPELLA Restrant</h4>
-                <p>Restrant Website with HTML & CSS and Responsive Design.</p>
-                <a href="assets/img/portfolio/restrant.png" title="Restrant" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href=" https://alaanabil45.github.io/restaurant/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="assets/img/portfolio/vellora.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>VELOURA | Organic Skincare E-Commerce Website</h4>
-                <p>modern, responsive e-commerce web project with Firebase database designed to offer a smooth shopping experience for organic skincare products.</p>
-                <a href="assets/img/portfolio/vellora.png" title="VELOURA" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="https://alaanabil45.github.io/VELOURA/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="assets/img/portfolio/landing.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Courses Platform</h4>
-                <p>A Simple Landing Page with HTML, CSS and Responsive Design.</p>
-                <a href="assets/img/portfolio/landing.png" title="Courses Platform" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="https://alaanabil45.github.io/html-css-task-depi/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="assets/img/portfolio/finder.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Finder</h4>
-                <p>Exploring top-rated certified pros nearby project with A Simple Landing page with some JS and another Features</p>
-                <a href="assets/img/portfolio/finder.png" title="Finder" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="https://alaanabil45.github.io/Finder/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
-              <img src="assets/img/portfolio/Sellifyx.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Sellifyx</h4>
-                <p>A Fully Completed Electronics E-Commerce System with angular and Firebase database.</p>
-                <a href="assets/img/portfolio/Sellifyx.png" title="Sellifyx" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="https://sellifyx-alaanabil45s-projects.vercel.app/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="assets/img/portfolio/agarly.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Agarly Admin-Dashboard</h4>
-                <p>A Fully Completed Admin-Dashboard with<br/> React & Tailwind CSS with multiple Features<br/> and API Connections.</p>
-                <a href="assets/img/portfolio/agarly.png" title="Agarly" data-gallery="portfolio-gallery-product" class="glightbox preview-link ps-2"><i class="bi bi-zoom-in  ps-2"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-bootstrap">
-              <img src="assets/img/portfolio/elearning.png" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Elearning | Educational Landing Page</h4>
-                <p>An Educational Landing Page with Bootstrap 5 , Arabic Language and Multiple Features</p>
-                <a href="assets/img/portfolio/elearning.png" title="Elearning" data-gallery="portfolio-gallery-product" class="glightbox preview-link ps-2"><i class="bi bi-zoom-in  ps-2"></i></a>
-                <a href="https://alaanabil45.github.io/Elearning/" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-          </div><!-- End Portfolio Container -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Portfolio Section -->
-
-    
-
-    
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Have a project in mind? Let’s connect and bring your ideas to life.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="info-wrap" data-aos="fade-up" data-aos-delay="200">
-          <div class="row gy-5">
-
-            <div class="col-lg-4">
-              <div class="info-item d-flex align-items-center">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Address</h3>
-                  <p>Alexandria, Egypt</p>
-                </div>
-              </div>
-            </div><!-- End Info Item -->
-
-            <div class="col-lg-4">
-              <div class="info-item d-flex align-items-center">
-                <i class="bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3>Call Us</h3>
-                  <p>+20 112 264 2619</p>
-                </div>
-              </div>
-            </div><!-- End Info Item -->
-
-            <div class="col-lg-4">
-              <div class="info-item d-flex align-items-center">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email Us</h3>
-                  <p>alaanab2005@gmail.com</p>
-                </div>
-              </div>
-            </div><!-- End Info Item -->
-
-          </div>
-        </div>
-
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
-          <div class="row gy-4">
-
-            <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-            </div>
-
-            <div class="col-md-6 ">
-              <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-            </div>
-
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-            </div>
-
-            <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-
-              <button type="submit">Send Message</button>
-            </div>
-
-          </div>
-        </form><!-- End Contact Form -->
-
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer accent-background">
-
-    <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">DevFolio</strong> <span>All Rights Reserved</span></p>
-      </div>
-      <div class="social-links d-flex justify-content-center">
-        <a href="https://github.com/alaanabil45"><i class="bi bi-github"></i></a>
-        <a href="mailto:alaanab2005@gmail.com"><i class="bi bi-envelope"></i></a>
-        <a href="https://www.linkedin.com/in/alaa-nabil-290b022ab/"><i class="bi bi-linkedin"></i></a>
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Frontend Developer</p>
+      <h1 class="hero-name">Alaa<br><em>Nabil</em></h1>
+      <p class="hero-desc">Crafting responsive, high-performance web interfaces with clean design and seamless functionality. Turning ideas into digital experiences.</p>
+      <div class="hero-cta">
+        <a href="#portfolio" class="btn-primary">
+          View Work
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
       </div>
     </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
 
+  <!-- About -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="about-heading">Passionate about<br><em>great interfaces</em></h2>
+      <p class="about-text">I am a Frontend Developer specializing in HTML, CSS, and JavaScript, with hands-on experience in React, Angular, and Bootstrap. I design and build responsive, high-performance web interfaces that combine clean, modern design with seamless functionality.</p>
+      <p class="about-text">My work emphasizes intuitive user experiences, cross-browser compatibility, and optimized, maintainable code. I love implementing best practices and leveraging the latest frontend technologies.</p>
+      <div class="about-details">
+        <div class="detail-row"><strong>Location</strong><span>Alexandria, Egypt</span></div>
+        <div class="detail-row"><strong>Email</strong><span>alaanab2005@gmail.com</span></div>
+        <div class="detail-row"><strong>Phone</strong><span>+20 112 264 2619</span></div>
+        <div class="detail-row"><strong>Availability</strong><span>Open to opportunities</span></div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <div class="section-label">My Skills</div>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-header"><span>HTML / CSS</span><span class="skill-pct">100%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="100"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>JavaScript</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>React</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Bootstrap</span><span class="skill-pct">55%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="55"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Angular</span><span class="skill-pct">40%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="40"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume -->
+  <section id="resume">
+    <div class="section-label reveal">Resume</div>
+    <div class="resume-grid">
+      <div class="reveal">
+        <h3 class="resume-col-title">Education</h3>
+        <div class="timeline-item">
+          <div class="timeline-date">2023 — 2027</div>
+          <div class="timeline-title">Faculty of Computer & Data Science</div>
+          <div class="timeline-sub">Alexandria University, Egypt</div>
+          <div class="timeline-body">Pursuing a Bachelor's degree in Computer & Data Science, focusing on software development, web technologies, and data analysis. Gaining strong theoretical knowledge and practical skills in programming, databases, and modern frontend frameworks.</div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <h3 class="resume-col-title">Experience</h3>
+        <div class="timeline-item">
+          <div class="timeline-date">July 2025 — Present</div>
+          <div class="timeline-title">React Frontend Developer</div>
+          <div class="timeline-sub">Depi — Alexandria, Egypt</div>
+          <ul class="timeline-body">
+            <li>Intensive React Frontend Development training, building dynamic responsive applications.</li>
+            <li>Hands-on experience with components, state management, hooks, and routing.</li>
+            <li>Integrating APIs and implementing modern frontend best practices.</li>
+            <li>Creating clean, maintainable, and scalable code for real-world projects.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="section-label reveal">Services</div>
+    <h2 class="services-heading reveal">What I can <em>do for you</em></h2>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <h3 class="service-title">Responsive Web Design</h3>
+        <p class="service-desc">Designing clean and responsive interfaces that adapt seamlessly to all devices, ensuring optimal user experience across desktops, tablets, and mobiles.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+        </svg>
+        <h3 class="service-title">React Development</h3>
+        <p class="service-desc">Building dynamic single-page applications with React, leveraging components, state management, and hooks for interactive and scalable web solutions.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+        </svg>
+        <h3 class="service-title">UI / UX Design</h3>
+        <p class="service-desc">Creating visually appealing and intuitive user interfaces that enhance usability, accessibility, and overall user satisfaction across every touchpoint.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="section-label reveal">Portfolio</div>
+    <h2 class="portfolio-heading reveal">Selected <em>Work</em></h2>
+    <p class="portfolio-intro reveal">A showcase of my projects highlighting creativity, innovation, and dedication to quality.</p>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="*">All</button>
+      <button class="filter-btn" data-filter="html">HTML & CSS</button>
+      <button class="filter-btn" data-filter="js">JavaScript</button>
+      <button class="filter-btn" data-filter="react">React</button>
+      <button class="filter-btn" data-filter="bootstrap">Bootstrap</button>
+      <button class="filter-btn" data-filter="angular">Angular</button>
+    </div>
+    <div class="portfolio-grid reveal">
+
+      <div class="portfolio-card" data-cat="js">
+        <img src="assets/img/portfolio/wastech.png" alt="Agarly Dashboard">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">JavaScript</div>
+          <div class="portfolio-card-title">Wastech Website Redesign</div>
+          <div class="portfolio-card-desc">Redesigned the Wastech website with improved layout, structured content, and better performance.</div>
+          <div class="portfolio-links">
+            <span class="portfolio-link" style="cursor:default;opacity:0.5">Client Work</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="react">
+        <img src="assets/img/portfolio/agarly.png" alt="Agarly Dashboard">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">React + Tailwind CSS</div>
+          <div class="portfolio-card-title">Agarly Admin Dashboard</div>
+          <div class="portfolio-card-desc">Full-featured admin dashboard with API connections.</div>
+          <div class="portfolio-links">
+            <span class="portfolio-link" style="cursor:default;opacity:0.5">Client Work</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="angular">
+        <img src="assets/img/portfolio/sellifyx.png" alt="Sellifyx">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Angular + Firebase</div>
+          <div class="portfolio-card-title">Sellifyx</div>
+          <div class="portfolio-card-desc">Full electronics e-commerce system.</div>
+          <div class="portfolio-links">
+            <a href="https://sellifyx-alaanabil45s-projects.vercel.app/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="bootstrap">
+        <img src="assets/img/portfolio/elearning.png" alt="Elearning">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Bootstrap 5</div>
+          <div class="portfolio-card-title">Elearning Platform</div>
+          <div class="portfolio-card-desc">Arabic educational landing page with multiple features.</div>
+          <div class="portfolio-links">
+            <a href="https://alaanabil45.github.io/Elearning/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="html">
+        <img src="assets/img/portfolio/landing.png" alt="Courses Platform">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">HTML & CSS</div>
+          <div class="portfolio-card-title">Courses Platform</div>
+          <div class="portfolio-card-desc">A clean educational landing page.</div>
+          <div class="portfolio-links">
+            <a href="https://alaanabil45.github.io/html-css-task-depi/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="js">
+        <img src="assets/img/portfolio/finder.png" alt="Finder">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">JavaScript</div>
+          <div class="portfolio-card-title">Finder</div>
+          <div class="portfolio-card-desc">Exploring top-rated certified pros nearby.</div>
+          <div class="portfolio-links">
+            <a href="https://alaanabil45.github.io/Finder/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="html">
+        <img src="assets/img/portfolio/restrant.png" alt="CAPELLA Restaurant">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">HTML & CSS</div>
+          <div class="portfolio-card-title">CAPELLA Restaurant</div>
+          <div class="portfolio-card-desc">Restaurant website with responsive design.</div>
+          <div class="portfolio-links">
+            <a href="https://alaanabil45.github.io/restaurant/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-cat="js">
+        <img src="assets/img/portfolio/vellora.png" alt="VELOURA Skincare">
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">JavaScript + Firebase</div>
+          <div class="portfolio-card-title">VELOURA Skincare</div>
+          <div class="portfolio-card-desc">E-commerce platform for organic skincare products.</div>
+          <div class="portfolio-links">
+            <a href="https://alaanabil45.github.io/VELOURA/" target="_blank" class="portfolio-link">Live Site ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="contact-heading">Let's work<br><em>together</em></h2>
+      <p class="contact-text">Have a project in mind? Let's connect and bring your ideas to life. I'm always open to discussing new opportunities.</p>
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Alexandria, Egypt
+        </div>
+        <div class="contact-info-item">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          <a href="tel:+201122642619">+20 112 264 2619</a>
+        </div>
+        <div class="contact-info-item">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <a href="mailto:alaanab2005@gmail.com">alaanab2005@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="What's this about?">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Send Message
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="#hero" class="footer-logo">Alaa Nabil.</a>
+    <span class="footer-copy">© 2025 Alaa Nabil. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="https://github.com/alaanabil45" target="_blank" aria-label="GitHub">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      </a>
+      <a href="mailto:alaanab2005@gmail.com" aria-label="Email">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/alaa-nabil-290b022ab/" target="_blank" aria-label="LinkedIn">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </div>
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Back to Top -->
+  <a href="#hero" id="back-top" aria-label="Back to top">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg>
+  </a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <script>
+    // ─── CURSOR
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 4 + 'px';
+      cursor.style.top = my - 4 + 'px';
+    });
+    setInterval(() => {
+      ring.style.left = mx - 16 + 'px';
+      ring.style.top = my - 16 + 'px';
+    }, 50);
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(3)'; ring.style.transform = 'scale(1.5)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+    });
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    // ─── HEADER SCROLL
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+      document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+    });
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+    // ─── MOBILE NAV
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
+    // ─── REVEAL ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ─── SKILL BARS
+    const barObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('#about').forEach(el => barObs.observe(el));
+
+    // ─── PORTFOLIO FILTER
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.portfolio-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(card => {
+          if (f === '*' || card.dataset.cat === f) {
+            card.classList.remove('hidden');
+            card.style.animation = 'fadeUp 0.4s ease forwards';
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </body>
-
 </html>
